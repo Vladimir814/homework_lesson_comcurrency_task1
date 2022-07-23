@@ -8,17 +8,38 @@ package main
 // Порядок друку не важливий.
 // “slice 1: 10”
 // “slice 2: 16”
+
+import (
+	"fmt"
+	"sync"
+)
+
 func main() {
 	// Розкоментуй мене)
-	// n := [][]int{
-	// 	{2, 6, 9, 24},
-	// 	{7, 3, 94, 3, 0},
-	// 	{4, 2, 8, 35},
-	// }
+	n := [][]int{
+		{2, 6, 9, 24},
+		{7, 3, 94, 3, 0},
+		{4, 2, 8, 35},
+	}
 
 	// Ваша реалізація
+	var wg sync.WaitGroup
+	for i := 0; i < len(n); i++ {
+		wg.Add(1)
+
+		go func(i int) {
+			defer wg.Done()
+			sum(i,n[i])
+		}(i)
+	}
+
+	wg.Wait()
 }
 
-func sum([]int) {
-	// Ваша реалізація
+func sum(i int,s []int)  {
+	sumOfElements := 0
+	for _,v := range s {
+		sumOfElements += v
+	}
+	fmt.Printf("slice %d: %d.\n", i, sumOfElements)
 }

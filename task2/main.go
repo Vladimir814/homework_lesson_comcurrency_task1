@@ -30,6 +30,8 @@ func main() {
 			}
 			ch <- res
 		}(ch, slice)
+		}
+	for i := 0; i < len(n); i++ {
 		sum += <-ch
 	}
 	close(ch)
